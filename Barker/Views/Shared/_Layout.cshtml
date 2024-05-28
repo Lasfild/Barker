@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Barker</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <h1>Barker</h1>
+    </header>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/Home/About">About</a>
+        <a href="/Home/Category">Category</a>
+    </nav>
+    <div class="container">
+        @RenderBody()
+    </div>
+    <footer>
+        <p>&copy; 2024 Barker</p>
+    </footer>
+</body>
+</html>
