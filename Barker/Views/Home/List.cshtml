@@ -1,0 +1,22 @@
+﻿@using Barker.ViewModels
+@model ProductListViewModel
+
+@{
+    Layout = "_Layout";
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Всі товари</title>
+</head>
+<body>
+    <h2>@Model.CurrentCategory</h2>
+    @foreach (var product in Model.AllProducts)
+    {
+        <div>
+            <h2>Модель: @product.Name</h2>
+            <p>Ціна: @product.Price.ToString("c")</p>
+        </div>
+    }
+</body>
+</html>

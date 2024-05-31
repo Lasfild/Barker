@@ -1,6 +1,22 @@
-﻿@{
+﻿@model IEnumerable<Barker.Models.Product>
+
+@{
+    Layout = "_Layout";
     ViewData["Title"] = "Home Page";
 }
 
-<h2>Welcome to Barker</h2>
-<p>This is the home page of Barker website. Your website is running on ASP.NET Core MVC!</p>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <h1>Products</h1>
+    <ul>
+        @foreach (var product in Model)
+        {
+            <li>@product.Name - @product.Price.ToString("C")</li>
+        }
+    </ul>
+</body>
+</html>

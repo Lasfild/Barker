@@ -1,25 +1,26 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"] - Barker</title>
+    <title>@ViewData["Title"] - My ASP.NET Application</title>
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
     <header>
-        <h1>Barker</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/Home/List">List</a></li>
+            </ul>
+        </nav>
     </header>
-    <nav>
-        <a href="/">Home</a>
-        <a href="/Home/About">About</a>
-        <a href="/Home/Category">Category</a>
-    </nav>
     <div class="container">
         @RenderBody()
     </div>
     <footer>
-        <p>&copy; 2024 Barker</p>
+        <p>&copy; 2024 - My ASP.NET Application</p>
     </footer>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>
