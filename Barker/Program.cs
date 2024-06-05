@@ -1,33 +1,58 @@
+using Barker;
 using Barker.Interfaces;
-using Barker.Mocks;
+using Barker.Models;
+using Barker.Repositories;
+using Microsoft.EntityFrameworkCore;
 
-var builder = WebApplication.CreateBuilder(args); // Создает новый экземпляр приложения
+var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews(); // Добавляет поддержку контроллеров и представлений в контейнер служб
-builder.Services.AddTransient<IAllProducts, MockProduct>();
-builder.Services.AddTransient<IProductCategory, MockCategory>();
+// Добавляем контекст базы данных в контейнер зависимостей
+builder.Services.AddDbContext<AppDBContent>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-var app = builder.Build(); // Строит приложение
+// Регистрируем реализации интерфейсов
+builder.Services.AddScoped<IAllProducts, ProductRepository>();
+builder.Services.AddScoped<IProductCategory, CategoryRepository>();
 
-if (!app.Environment.IsDevelopment())
+builder.Services.AddControllersWithViews();
+builder.Services.AddCoreAdmin();
+
+var app = builder.Build();
+
+// Конфигурация middleware
+
+if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error"); // Использует страницу ошибки для неразработочной среды
-    app.UseHsts(); // Включает HSTS (HTTP Strict Transport Security)
+    app.UseDeveloperExceptionPage();
 }
 else
 {
-    app.UseDeveloperExceptionPage(); // Включает страницу разработчика для отладки ошибок
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts();
 }
 
-app.UseHttpsRedirection(); // Перенаправляет HTTP-запросы на HTTPS
-app.UseStaticFiles(); // Включает поддержку статических файлов
-app.UseStatusCodePages(); // Включает страницы для отображения кодов статуса
+app.UseHttpsRedirection();
+app.UseStaticFiles();
 
-app.UseRouting(); // Включает маршрутизацию
-app.UseAuthorization(); // Включает авторизацию
+app.UseRouting();
+
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}"); // Определяет маршрут по умолчанию
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run(); // Запускает приложение
+// Инициализация базы данных
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<AppDBContent>();
+
+    // Создание базы данных, если она не существует
+    context.Database.EnsureCreated();
+
+    // Заполнение базы данных начальными данными
+    DBObjects.Initial(context);
+}
+
+app.Run();

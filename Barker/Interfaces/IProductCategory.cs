@@ -1,4 +1,5 @@
-﻿using Barker.Models;
+﻿using System.Collections.Generic;
+using Barker.Models;
 
 namespace Barker.Interfaces
 {

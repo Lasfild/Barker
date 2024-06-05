@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Barker.Models.Category>
+@{
+    Layout = "_Layout";
+}
+
+<!doctype html>
+<html lang="uk">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Barker - Categories</title>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Categories</h1>
+        @if (Model != null && Model.Any())
+        {
+            <div class="row">
+                @foreach (var category in Model)
+                {
+                    <div class="col-md-6">
+                        <div class="category">
+                            <h2>@category.Name</h2>
+                            <p>@category.Description</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No categories found.</p>
+        }
+    </div>
+</body>
+</html>

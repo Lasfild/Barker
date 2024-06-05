@@ -1,22 +1,13 @@
-﻿@model IEnumerable<Barker.Models.Product>
-
-@{
+﻿@{
     Layout = "_Layout";
-    ViewData["Title"] = "Home Page";
 }
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>@ViewData["Title"]</title>
+    <title>Barker</title>
 </head>
 <body>
-    <h1>Products</h1>
-    <ul>
-        @foreach (var product in Model)
-        {
-            <li>@product.Name - @product.Price.ToString("C")</li>
-        }
-    </ul>
+    <h1><a href="/Home/List" class="text-white">Barker</a></h1>
 </body>
 </html>
