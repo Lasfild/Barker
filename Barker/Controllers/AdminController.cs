@@ -18,21 +18,77 @@ namespace Barker.Controllers
             return View(objCategoryList);
         }
 
-        public IActionResult CreateCategory()
+        public IActionResult create()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult CreateCategory(CategoryModel category)
+        public IActionResult create(CategoryModel category)
         {
             if (ModelState.IsValid)
             {
                 _db.Categories.Add(category);
                 _db.SaveChanges();
+                TempData["success"] = "Category created successfully";
                 return RedirectToAction("Index");
             }
             return View();
+        }
+
+        public IActionResult edit(ushort? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            CategoryModel? categoryFromDb = _db.Categories.Find(id);
+            if(categoryFromDb == null)
+            {
+                return NotFound();
+            }
+            return View(categoryFromDb);
+        }
+
+        [HttpPost]
+        public IActionResult edit(CategoryModel category)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Categories.Update(category);
+                _db.SaveChanges();
+                TempData["success"] = "Category edited successfully";
+                return RedirectToAction("Index");
+            }
+            return View(category);
+        }
+
+        public IActionResult delete(ushort? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            CategoryModel? categoryFromDb = _db.Categories.Find(id);
+            if (categoryFromDb == null)
+            {
+                return NotFound();
+            }
+            return View(categoryFromDb);
+        }
+
+        [HttpPost, ActionName("delete")]
+        public IActionResult deletePost(ushort? id)
+        {
+            CategoryModel? category = _db.Categories.Find(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            _db.Categories.Remove(category);
+            _db.SaveChanges();
+            TempData["success"] = "Category deleted successfully";
+            return RedirectToAction("Index");
         }
     }
 }

@@ -1,23 +1,23 @@
 ﻿<!doctype html>
 <html lang="uk">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="keywords" content="">
-        <meta name="robots" content="">
-        <link rel="icon" href="/favicon.ico">
-        <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-        <link href="~/css/_Layout.css" rel="stylesheet">
-        <link href="~/css/About.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="robots" content="">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="~/css/_Layout.css" rel="stylesheet">
+    <link href="~/css/About.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
 
-    <body class="d-flex flex-column">
-        <header>
+<body class="d-flex flex-column">
+    <header>
         <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
             <div class="container-fluid">
-                <a href="/admin"><img class="navbar-brand" src="~/img/barkerlogo.png">
+                <a asp-controller="Admin" asp-action="Index">
+                    <img class="navbar-brand" src="~/img/barkerlogo.png">
                     <span class="lover-nav-span">В Україні з 2010</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,19 +26,19 @@
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/about">Історія бренду</a>
+                            <a class="nav-link" asp-controller="About" asp-action="Index">Історія бренду</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/category">Колекції</a>
+                            <a class="nav-link" asp-controller="Category" asp-action="Index">Колекції</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/contacts">Контакти</a>
+                            <a class="nav-link" asp-controller="Contacts" asp-action="Index">Контакти</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/sale">Акції</a>
+                            <a class="nav-link" asp-controller="Sale" asp-action="Index">Акції</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="categories/accessory">Аксесуари</a>
+                            <a class="nav-link" asp-controller="Categories" asp-action="Accessory">Аксесуари</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Розміри</a>
@@ -58,47 +58,47 @@
                 </div>
             </div>
         </nav>
-        </header>
+    </header>
 
-        <main role="main" class="container mt-5 flex-fill">
+    <main role="main" class="container mt-5 flex-fill">
 
-@RenderBody()
+        @RenderBody()
 
-        </main>
-        <footer class="border-top bg-primary text-muted mt-auto">
-            <div class="footer-container d-flex align-items-center">
-                <a class="nav-link-instagram" href="https://www.instagram.com/barker_kiev/" target="_blank" title="Наш Інстаграм">
-                    <i class="bi bi-instagram"></i>
-                </a>
-                <a class="nav-link-facebook" href="https://www.facebook.com/barker.kiev/" target="_blank" title="Наш Фейсбук">
-                    <i class="bi bi-facebook"></i>
-                </a>
-                <i class="bi bi-calendar-date-fill nav-link-calendar">Час роботи <br /> Пн.-Нд.12:00-18:00</i>
-                <a class="nav-link-geolocation" href="/contacts" target="_blank" title="Карта">
-                    <i class="bi bi-geo-alt">М. Київ, бульвар Л. Українки, 20</i>
-                </a>
-                <a href="tel:+380935847849">
-                    <i class="bi bi-telephone nav-link-telephone">+38 (093) 584-78-49</i>
-                </a>
-                <a href="tel:+380632922236">
-                    <i class="bi bi-telephone nav-link-telephone">+38 (063) 292-22-36 (Viber)</i>
-                </a>
+    </main>
+    <footer class="border-top bg-primary text-muted mt-auto">
+        <div class="footer-container d-flex align-items-center">
+            <a class="nav-link-instagram" href="https://www.instagram.com/barker_kiev/" target="_blank" title="Наш Інстаграм">
+                <i class="bi bi-instagram"></i>
+            </a>
+            <a class="nav-link-facebook" href="https://www.facebook.com/barker.kiev/" target="_blank" title="Наш Фейсбук">
+                <i class="bi bi-facebook"></i>
+            </a>
+            <i class="bi bi-calendar-date-fill nav-link-calendar">Час роботи <br /> Пн.-Нд.12:00-18:00</i>
+            <a class="nav-link-geolocation" asp-controller="Contacts" asp-action="Index" title="Карта">
+                <i class="bi bi-geo-alt">М. Київ, бульвар Л. Українки, 20</i>
+            </a>
+            <a href="tel:+380935847849">
+                <i class="bi bi-telephone nav-link-telephone">+38 (093) 584-78-49</i>
+            </a>
+            <a href="tel:+380632922236">
+                <i class="bi bi-telephone nav-link-telephone">+38 (063) 292-22-36 (Viber)</i>
+            </a>
+        </div>
+        <form action="" method="post">
+            <p class="feedback-form">Форма зворотньго зв’язку</p>
+            <div>
+                <input type="text" placeholder="Ім’я" maxlength="50" id="id_feedbackName" required />
+                <input type="email" placeholder="E-mail" maxlength="50" id="id_feedbackEmail" required />
+                <input type="text" placeholder="Телефон" maxlength="50" id="id_feedbackPhone" required />
             </div>
-            <form action="" method="post">
-                <p class="feedback-form">Форма зворотньго зв’язку</p>
-                <div>
-                    <input type="text" placeholder="Ім’я" maxlength="50" id="id_feedbackName" required />
-                    <input type="email" placeholder="E-mail" maxlength="50" id="id_feedbackEmail" required />
-                    <input type="text" placeholder="Телефон" maxlength="50" id="id_feedbackPhone" required />
-                </div>
-                <div class="">
-                    <textarea type="text" placeholder="Докладно опишіть своє питання" maxlength="500" id="id_feedbackText" required></textarea>
-                </div>
-                <div>
-                    <button class="btn btn-outline-success" id="feedbackButton" type="submit">Надіслати</button>
-                </div>
-            </form>
-        </footer>
-        <script src="~/js/bootstrap.js"></script>
-    </body>
+            <div class="">
+                <textarea type="text" placeholder="Докладно опишіть своє питання" maxlength="500" id="id_feedbackText" required></textarea>
+            </div>
+            <div>
+                <button class="btn btn-outline-success" id="feedbackButton" type="submit">Надіслати</button>
+            </div>
+        </form>
+    </footer>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+</body>
 </html>

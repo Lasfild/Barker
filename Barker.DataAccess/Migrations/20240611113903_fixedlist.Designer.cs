@@ -3,6 +3,7 @@ using Barker;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Barker.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240611113903_fixedlist")]
+    partial class fixedlist
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,8 +115,8 @@ namespace Barker.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                    b.Property<bool>("Availability")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Color")
                         .IsRequired()
@@ -135,18 +138,9 @@ namespace Barker.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsOnSale")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Shoe")
                         .HasColumnType("int");
@@ -176,24 +170,19 @@ namespace Barker.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Products");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CategoryId = 2,
-                            Color = "ROSEWOOD",
+                            Availability = true,
+                            Color = "чорний",
                             Country = "Англія",
-                            Description = "Колекція Handcrafted - це вершина майстерності англійських майстрів фабрики Barker. Історичний текст, вигравіюваний на шкіряній підошві - це дуже вишукано! Відрізний носок з перфорацією та довгий вінгтіп посилює враження.",
+                            Description = "Класичні оксфорди з натуральної шкіри, ручної роботи.",
                             Fullness = "G",
-                            Img = "[\"/img/product_Img/AntiqueRosewood/Lerwick-431527_AntiqueRosewood_1080x.png\",\"/img/product_img/AntiqueRosewood/Lerwick_431527_AntiqueRosewoodCalf_side_1024x6002x.png\",\"/img/product_img/AntiqueRosewood/Lerwick_431527_AntiqueRosewood_top_1024x6002x.png\",\"/img/product_img/AntiqueRosewood/Rochester_380417_7mm_Leather_464Last_1024x6002x.png\"]",
-                            IsAvailable = false,
-                            IsOnSale = false,
-                            Name = "Lerwick Antique Rosewood",
-                            Price = 21400m,
+                            Img = "[\"/img/product_Img/Lerwick-431527_AntiqueRosewood_1080x.png\",\"/img/product_img/Lerwick_431527_AntiqueRosewoodCalf_side_1024x6002x.png\",\"/img/product_img/Lerwick_431527_AntiqueRosewood_top_1024x6002x.png\",\"/img/product_img/Rochester_380417_7mm_Leather_464Last_1024x6002x.png\"]",
+                            Name = "LERWICK ANTIQUE ROSEWOOD",
                             Shoe = 464,
                             Size = "[6,8.5,9]",
                             Sole = "шкіра",
@@ -201,65 +190,7 @@ namespace Barker.Migrations
                             Style = "оксфорд",
                             TopMaterial = "Натуральна шкіра",
                             VendorCode = 431527
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CategoryId = 1,
-                            Color = "ROSEWOOD",
-                            Country = "Англія",
-                            Description = "Бездоганні оксфорди із одного цільного шматка шкіри, ручна робота, Goodyear welted, дизайн та виробництво - Англія. Ювілейна колекція. В наявності і в чорному кольорі.",
-                            Fullness = "FX",
-                            Img = "[\"/img/product_Img/AlderneyRosewood/alderney_322026_rosewoodcalf.png\",\"/img/product_Img/AlderneyRosewood/alderney_322026_rosewoodcalf_side.png\",\"/img/product_Img/AlderneyRosewood/alderney_322026_rosewoodcalf_top.png\",\"/img/product_Img/AlderneyRosewood/alderney_3220_handcrafted_7mm_leather_396_last.png\"]",
-                            IsAvailable = true,
-                            IsOnSale = true,
-                            Name = "Alderney-Rosewood",
-                            Price = 21400m,
-                            Shoe = 396,
-                            Size = "[9,10,12]",
-                            Sole = "шкіра",
-                            SoleMethod = "рантовий",
-                            Style = "оксфорд",
-                            TopMaterial = "Натуральна шкіра",
-                            VendorCode = 322026
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CategoryId = 2,
-                            Color = "BLACK",
-                            Country = "Англія",
-                            Description = "Класичні оксфорди з перфорацією на носку. Комбінація гладкої та зернистої телячої шкіри. Будуть стильним доповненням вашого формального костюма.",
-                            Fullness = "G",
-                            Img = "[\"/img/product_Img/FloreBlack/flore_blackcalfgrain_angle_1.png\",\"/img/product_img/FloreBlack/flore_blackcalfgrain_side.png\",\"/img/product_img/FloreBlack/flore_blackcalf_top.png\",\"/img/product_img/FloreBlack/warrington_392737_last464_script-sole_3_2.png\"]",
-                            IsAvailable = true,
-                            IsOnSale = false,
-                            Name = "Flore Black",
-                            Price = 17000m,
-                            Shoe = 464,
-                            Size = "[9,10,11]",
-                            Sole = "Шкіра",
-                            SoleMethod = "Рантовий",
-                            Style = "Оксфорд",
-                            TopMaterial = "Натуральна шкіра",
-                            VendorCode = 411917
                         });
-                });
-
-            modelBuilder.Entity("Barker.Models.ProductModel", b =>
-                {
-                    b.HasOne("Barker.Models.CategoryModel", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("Barker.Models.CategoryModel", b =>
-                {
-                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

@@ -90,7 +90,8 @@ namespace Barker
                     TopMaterial = "Натуральна шкіра",
                     Size = new List<double> { 6, 8.5, 9 },
                     Color = "ROSEWOOD",
-                    Availability = false,
+                    IsAvailable = false,
+                    IsOnSale= false,
                     Description = "Колекція Handcrafted - це вершина майстерності англійських майстрів фабрики Barker. Історичний текст, вигравіюваний на шкіряній підошві - це дуже вишукано! Відрізний носок з перфорацією та довгий вінгтіп посилює враження.",
                     Img = new List<string> { "/img/product_Img/AntiqueRosewood/Lerwick-431527_AntiqueRosewood_1080x.png", "/img/product_img/AntiqueRosewood/Lerwick_431527_AntiqueRosewoodCalf_side_1024x6002x.png", "/img/product_img/AntiqueRosewood/Lerwick_431527_AntiqueRosewood_top_1024x6002x.png", "/img/product_img/AntiqueRosewood/Rochester_380417_7mm_Leather_464Last_1024x6002x.png" }
                 },
@@ -110,7 +111,8 @@ namespace Barker
                     TopMaterial = "Натуральна шкіра",
                     Size = new List<double> { 9, 10, 12 },
                     Color = "ROSEWOOD",
-                    Availability = true,
+                    IsAvailable = true,
+                    IsOnSale = true,
                     Description = "Бездоганні оксфорди із одного цільного шматка шкіри, ручна робота, Goodyear welted, дизайн та виробництво - Англія. Ювілейна колекція. В наявності і в чорному кольорі.",
                     Img = new List<string> { "/img/product_Img/AlderneyRosewood/alderney_322026_rosewoodcalf.png", "/img/product_Img/AlderneyRosewood/alderney_322026_rosewoodcalf_side.png", "/img/product_Img/AlderneyRosewood/alderney_322026_rosewoodcalf_top.png", "/img/product_Img/AlderneyRosewood/alderney_3220_handcrafted_7mm_leather_396_last.png" }
                 },
@@ -130,7 +132,8 @@ namespace Barker
                     TopMaterial = "Натуральна шкіра",
                     Size = new List<double> { 9, 10, 11 },
                     Color = "BLACK",
-                    Availability = true,
+                    IsAvailable = true,
+                    IsOnSale = false,
                     Description = "Класичні оксфорди з перфорацією на носку. Комбінація гладкої та зернистої телячої шкіри. Будуть стильним доповненням вашого формального костюма.",
                     Img = new List<string> { "/img/product_Img/FloreBlack/flore_blackcalfgrain_angle_1.png", "/img/product_img/FloreBlack/flore_blackcalfgrain_side.png", "/img/product_img/FloreBlack/flore_blackcalf_top.png", "/img/product_img/FloreBlack/warrington_392737_last464_script-sole_3_2.png" }
                 }

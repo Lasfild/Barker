@@ -1,0 +1,38 @@
+﻿@model List<ProductModel>
+@{
+    Layout = "_Layout";
+}
+<link href="~/css/Category-List.css" rel="stylesheet">
+
+<title>@ViewBag.CategoryName - Barker</title>
+
+<div class="container mt-5">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">@ViewBag.CategoryName</h2>
+        </div>
+    </div>
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            @foreach (var product in Model)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="category-card">
+                        <img src="@product.Img[0]" alt="@product.Name" class="img-fluid" />
+                        <div class="category-text">
+                            <h2>@product.Name</h2>
+                            <p>@product.Description</p>
+                            <p>@product.Size[0]</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>No products found.</p>
+    }
+</div>
+<script src="~/js/bootstrap.js"></script>
