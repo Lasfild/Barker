@@ -1,0 +1,29 @@
+﻿@model List<CategoryModel>
+@{
+    Layout = "_AdminLayout";
+}
+
+<h2>Categories</h2>
+<a asp-controller="admin" asp-action="createcategory" class="btn btn-primary">Create New Category</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Image</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td><img src="@item.Img" alt="@item.Name" class="img-thumbnail" style="max-width:100px;" /></td>
+            </tr>
+        }
+    </tbody>
+</table>

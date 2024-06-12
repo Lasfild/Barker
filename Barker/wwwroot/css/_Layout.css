@@ -1,0 +1,28 @@
+﻿body {
+    background: #E5E5E5;
+}
+
+.nav-link-instagram {
+    color: deeppink;
+}
+.nav-link-facebook {
+    color: #3f6cc8;
+}
+.nav-link-calendar {
+    color: white;
+}
+.feedback-form {
+    color: white;
+}
+.nav-link-geolocation {
+    color: white;
+}
+.nav-link-telephone {
+    color: white;
+}
+.lover-nav-span {
+    font-size: 12px;
+    color: white;
+    font-weight: bold;
+    margin-top: 7px;
+}
