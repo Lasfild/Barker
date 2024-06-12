@@ -9,14 +9,14 @@
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link href="~/css/_Layout.css" rel="stylesheet">
     <link href="~/css/About.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 </head>
 
 <body class="d-flex flex-column">
     <header>
         <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
             <div class="container-fluid">
-                <a asp-controller="Admin" asp-action="Index">
+                <a asp-area="Admin" asp-controller="Admin" asp-action="Index">
                     <img class="navbar-brand" src="~/img/barkerlogo.png">
                     <span class="lover-nav-span">В Україні з 2010</span>
                 </a>
@@ -26,28 +26,24 @@
                 <div class="collapse navbar-collapse" id="navbarColor01">
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="About" asp-action="Index">Історія бренду</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="About">Історія бренду</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Category" asp-action="Index">Колекції</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Contacts" asp-action="Index">Контакти</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="Contacts">Контакти</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Sale" asp-action="Index">Акції</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="Sale">Акції</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-controller="Categories" asp-action="Accessory">Аксесуари</a>
+                            <a class="nav-link" asp-controller="Category" asp-action="Accessory">Аксесуари</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Розміри</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Separated link</a>
+                                <a class="dropdown-item" href="#">Добавить размер*</a>
                             </div>
                         </li>
                     </ul>

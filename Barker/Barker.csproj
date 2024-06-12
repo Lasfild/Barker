@@ -23,11 +23,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Views\Category\handcrafted\" />
+		<Folder Include="Controllers\" />
+		<Folder Include="Areas\Customer\Views\Category\handcrafted\" />
 		<Folder Include="wwwroot\img\category_img\" />
 		<Folder Include="wwwroot\img\product_Img\AlderneyRosewood\" />
 		<Folder Include="wwwroot\img\product_Img\FloreBlack\" />
 		<Folder Include="wwwroot\js\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Barker.DataAccess\Barker.DataAccess.csproj" />
+	  <ProjectReference Include="..\Barker.Models\Barker.Models.csproj" />
 	</ItemGroup>
 
 </Project>

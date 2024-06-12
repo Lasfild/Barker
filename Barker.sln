@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Barker", "Barker\Barker.csproj", "{77E2F797-7086-422C-8D2E-86DF23CC59F4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BE9A9171-0A01-4EC5-AF54-4988D5DDAA7A} = {BE9A9171-0A01-4EC5-AF54-4988D5DDAA7A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Barker.DataAccess", "Barker.DataAccess\Barker.DataAccess.csproj", "{BE9A9171-0A01-4EC5-AF54-4988D5DDAA7A}"
 EndProject
