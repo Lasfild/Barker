@@ -7,10 +7,10 @@ namespace Barker.Models
     {
         [Key]
         [Required]
-        public ushort Id { get; set; }
+        public int Id { get; set; }
 
         [ForeignKey("Category")]
-        public ushort CategoryId { get; set; }
+        public int CategoryId { get; set; }
 
         [Required]
         public string? Name { get; set; }
@@ -61,5 +61,8 @@ namespace Barker.Models
         public string? Color { get; set; }
 
         public CategoryModel? Category { get; set; }
+
+        [NotMapped]
+        public List<CategoryModel>? Categories { get; set; }
     }
 }

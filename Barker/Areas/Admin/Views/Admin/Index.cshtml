@@ -1,50 +1,5 @@
-﻿@model List<CategoryModel>
-@{
+﻿@{
     Layout = "_AdminLayout";
 }
 
-<div class="card shadow border-0 mt-4">
-    <div class="card-header bg-primary bg-gradient ml-0 py-3">
-        <div class="row mt-2">
-            <div class="col-12 text-center">
-                <h2 class="text-white py-2">Edit Category</h2>
-            </div>
-        </div>
-    </div>
-    <div class="card-body p-4">
-        <a asp-controller="admin" asp-action="create" class="btn btn-primary">Create New Category</a>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Image</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var category in Model)
-                {
-                    <tr>
-                        <td>@category.Id</td>
-                        <td>@category.Name</td>
-                        <td>@category.Description</td>
-                        <td><img src="@category.Img" alt="@category.Name" class="img-thumbnail" style="max-width:100px;" /></td>
-                        <td>
-                            <div class="w-75 btn btn-group" role="group">
-                                <a asp-controller="admin" asp-action="edit" asp-route-id="@category.Id" class="btn btn-outline-primary mx-2">
-                                    <i class="bi bi-pencil-square"></i> Edit
-                                </a>
-                                <a asp-controller="admin" asp-action="delete" asp-route-id="@category.Id" class="btn btn-outline-danger mx-2">
-                                    <i class="bi bi-trash"></i> Delete
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-
-    </div>
-</div>
+<h2>Admin panel</h2>

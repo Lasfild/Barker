@@ -23,7 +23,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Controllers\" />
 		<Folder Include="Areas\Customer\Views\Category\handcrafted\" />
 		<Folder Include="wwwroot\img\category_img\" />
 		<Folder Include="wwwroot\img\product_Img\AlderneyRosewood\" />

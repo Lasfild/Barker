@@ -1,26 +1,21 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace Barker.Models
 {
     public class CategoryModel
     {
         [Key]
-        [DisplayName("Category Id")]
-        public ushort Id { get; set; }
+        [Required]
+        public int Id { get; set; }
 
         [Required]
-        [DisplayName("Category Name")]
         public string? Name { get; set; }
 
         [Required]
-        [DisplayName("Category Description")]
-        public string? Description {  get; set; }
+        public string? Description { get; set; }
 
         [Required]
-        [DisplayName("Category Img")]
         public string? Img { get; set; }
-
-        public ICollection<ProductModel> Products { get; set; } = new List<ProductModel>();
     }
 }

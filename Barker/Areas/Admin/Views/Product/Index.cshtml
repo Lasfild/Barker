@@ -1,0 +1,50 @@
+﻿@model List<ProductModel>
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-primary bg-gradient ml-0 py-3">
+        <div class="row mt-2">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">Колекції</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <a asp-controller="product" asp-action="create" class="btn btn-primary">Create New Product</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model)
+                {
+                    <tr>
+                        <td>@product.Id</td>
+                        <td>@product.Name</td>
+                        <td>@product.Description</td>
+                        <td><img src="@product.Img" alt="@product.Name" class="img-thumbnail" style="max-width:100px;" /></td>
+                        <td>
+                            <div class="w-75 btn btn-group" role="group">
+                                <a asp-controller="product" asp-action="edit" asp-route-id="@product.Id" class="btn btn-outline-primary mx-2">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <a asp-controller="product" asp-action="delete" asp-route-id="@product.Id" class="btn btn-outline-danger mx-2">
+                                    <i class="bi bi-trash"></i> Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

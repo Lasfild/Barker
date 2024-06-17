@@ -22,7 +22,14 @@
                 <div class="col-md-6 mb-4">
                     <div class="category-card">
                         <a href="/category/handcrafted/@product.Name">
-                            <img src="@Url.Content(product.Img[0])" alt="@product.Name" class="img-fluid" />
+                            @if (product.Img != null && product.Img.Count > 0)
+                            {
+                                <img src="@Url.Content(product.Img[0])" alt="@product.Name" class="img-fluid" />
+                            }
+                            else
+                            {
+                                <span>No image available</span>
+                            }
                             <div class="category-text">
                                 <h2>@product.Name</h2>
                                 <p>@product.Description</p>
