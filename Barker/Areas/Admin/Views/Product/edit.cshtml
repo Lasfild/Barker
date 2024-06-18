@@ -35,9 +35,9 @@
                     <span asp-validation-for="Description" class="text-danger p-0"></span>
                 </div>
                 <div class="form-floating mb-3 row p-1">
-                    <input asp-for="Img" type="file" multiple class="form-control border-0 shadow" />
-                    <label asp-for="Img" class="ms-2">Images</label>
-                    <span asp-validation-for="Img" class="text-danger p-0"></span>
+                    <label asp-for="ImgFiles" class="control-label">Загрузить новые изображения</label>
+                    <input type="file" asp-for="ImgFiles" class="form-control" multiple />
+                    <span asp-validation-for="ImgFiles" class="text-danger"></span>
                 </div>
                 <div class="form-floating mb-3 row p-1">
                     <input asp-for="Price" class="form-control border-0 shadow" />

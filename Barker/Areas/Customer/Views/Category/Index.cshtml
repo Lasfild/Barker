@@ -1,42 +1,23 @@
-﻿<!--Category page start-->
-@model List<CategoryModel>
+﻿@model List<CategoryModel>
+
 @{
     Layout = "_Layout";
 }
-<title>Barker - Categories</title>
 
 <div class="container mt-5">
-    <div class="row pt-4">
-        <div class="col-6">
-            <h2 class="text-primary">
-                Колекції
-            </h2>
-        </div>
-    </div>
-    @if (Model != null && Model.Any())
-    {
-        <div class="row">
-            @foreach (var category in Model)
-            {
-                <div class="col-md-6 mb-4">
-                    <div class="category-card">
-                        <a href="category/@category.Name">
-                        <img src="@category.Img" alt="@category.Name" class="img-fluid" />
-                        <div class="category-text">
-                            <h2>@category.Name</h2>
-                            <p>@category.Description</p>
-                        </div>
-                        </a>
+    <div class="row">
+        @foreach (var category in Model)
+        {
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="@category.Img" class="card-img-top" alt="@category.Name" />
+                    <div class="card-body">
+                        <h5 class="card-title">@category.Name</h5>
+                        <p class="card-text">@category.Description</p>
+                        <a href="@Url.Action("Category", "Category", new { name = category.Name }, null)" class="btn btn-primary">View Products</a>
                     </div>
                 </div>
-            }
-        </div>
-    }
-    else
-    {
-        <p>No categories found.</p>
-    }
+            </div>
+        }
+    </div>
 </div>
-<script src="~/js/bootstrap.js"></script>
-
-<!--Category page end-->

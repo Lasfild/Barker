@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Barker.Models
 {
@@ -15,7 +16,11 @@ namespace Barker.Models
         [Required]
         public string? Description { get; set; }
 
-        [Required]
         public string? Img { get; set; }
+
+        [NotMapped]
+        public IFormFile? ImgFile { get; set; }
+
+        public List<ProductModel> Products { get; set; } = new List<ProductModel>();
     }
 }

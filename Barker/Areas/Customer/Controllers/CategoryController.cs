@@ -1,41 +1,32 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Barker.DataAccess.Repository.IRepository;
 using Barker.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace Barker.Areas.Customer.Controllers
 {
     [Area("Customer")]
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
-        public CategoryController(ApplicationDbContext db)
+        private readonly IUnitOfWork _unitOfWork;
+
+        public CategoryController(IUnitOfWork unitOfWork)
         {
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
 
         public IActionResult Index()
         {
-            List<CategoryModel> objCategoryList = _db.Categories.ToList();
-            return View(objCategoryList);
+            var categories = _unitOfWork.Category.GetAll().ToList();
+            return View(categories);
         }
 
-        public IActionResult Anniversary()
+        public IActionResult Category(string name)
         {
-            var category = _db.Categories.FirstOrDefault(c => c.Name == "Anniversary");
+            var category = _unitOfWork.Category.Get(c => c.Name.ToLower() == name.ToLower());
             if (category != null)
             {
-                var products = _db.Products.Where(p => p.CategoryId == category.Id).ToList();
-                return View(products);
-            }
-
-            return NotFound();
-        }
-
-        public IActionResult Handcrafted()
-        {
-            var category = _db.Categories.FirstOrDefault(c => c.Name == "Handcrafted");
-            if (category != null)
-            {
-                var products = _db.Products.Where(p => p.CategoryId == category.Id).ToList();
+                var products = _unitOfWork.Product.GetAll(p => p.CategoryId == category.Id).ToList();
                 return View(products);
             }
 

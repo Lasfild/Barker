@@ -7,12 +7,12 @@
     <div class="card-header bg-primary bg-gradient ml-0 py-3">
         <div class="row mt-2">
             <div class="col-12 text-center">
-                <h2 class="text-white py-2">Create Product</h2>
+                <h2 class="text-white py-2">Create Category</h2>
             </div>
         </div>
     </div>
     <div class="card-body p-4" style="background: #E5E5E5;">
-        <form method="post" class="row">
+        <form method="post" enctype="multipart/form-data" class="row">
             <div class="border p-3 my-4">
                 <div class="form-floating mb-3 row p-1">
                     <input asp-for="Name" class="form-control border-0 shadow" placeholder="Name" />
@@ -25,9 +25,9 @@
                     <span asp-validation-for="Description" class="text-danger p-0"></span>
                 </div>
                 <div class="form-floating mb-3 row p-1">
-                    <input asp-for="Img" class="form-control border-0 shadow" placeholder="Img" />
-                    <label asp-for="Img" class="ms-2"></label>
-                    <span asp-validation-for="Img" class="text-danger p-0"></span>
+                    <input asp-for="ImgFile" type="file" class="form-control border-0 shadow" placeholder="Img" />
+                    <label asp-for="ImgFile" class="ms-2"></label>
+                    <span asp-validation-for="ImgFile" class="text-danger p-0"></span>
                 </div>
                 <div class="row mt-3">
                     <div class="col-6 col-md-3">
