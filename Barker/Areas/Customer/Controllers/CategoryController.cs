@@ -1,7 +1,6 @@
 ﻿using Barker.DataAccess.Repository.IRepository;
-using Barker.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+using Barker.Models;
 
 namespace Barker.Areas.Customer.Controllers
 {
@@ -27,6 +26,7 @@ namespace Barker.Areas.Customer.Controllers
             if (category != null)
             {
                 var products = _unitOfWork.Product.GetAll(p => p.CategoryId == category.Id).ToList();
+                ViewBag.CategoryName = category.Name;
                 return View(products);
             }
 

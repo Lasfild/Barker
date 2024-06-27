@@ -1,0 +1,54 @@
+﻿@model Barker.Models.ProductModel
+
+@{
+    Layout = "_Layout";
+    ViewData["PageTitle"] = Model.Name;
+}
+<link href="~/css/Product.css" rel="stylesheet" />
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @for (int i = 0; i < Model.Img.Count; i++)
+                    {
+                        <div class="carousel-item @(i == 0 ? "active" : "")">
+                            <img src="@Model.Img[i]" class="d-block w-100" alt="@Model.Name">
+                        </div>
+                    }
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h2>@Model.Name</h2>
+            <p>@Model.Description</p>
+            <p>Артикул: @Model.VendorCode</p>
+            <p>Ціна: @Model.Price.ToString("N0") грн</p>
+            <p>Стиль: @Model.Style</p>
+            <p>Країна виробник: @Model.Country</p>
+            <p>Матеріал верху: @Model.TopMaterial</p>
+            <p>Колір: @Model.Color</p>
+            <div class="sizes mt-4">
+                <h4>Розміри у наявності</h4>
+                <div class="size-grid">
+                    @foreach (var size in new List<double> { 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 13 })
+                    {
+                        <div class="size-box @(Model.Size != null && Model.Size.Contains(size) ? "available" : "")">
+                            @size
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

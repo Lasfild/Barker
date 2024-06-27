@@ -1,0 +1,43 @@
+﻿/* Квадратики для размеров */
+
+.size-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.size-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    border: 1px solid #ccc;
+    font-size: 1.2em;
+    background-color: #C9D1C8;
+    text-decoration: line-through;
+    color: #304040;
+}
+.size-box.available {
+    background-color: #8FBC8F;
+    font-weight: bold;
+    text-decoration: none;
+    color: #04202C;
+}
+.pagedList a, .pagedList span {
+    padding: 5px 10px;
+    margin: 0 2px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+}
+
+.pagedList .active a {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+
+.pagedList a:hover {
+    background-color: #f1f1f1;
+}

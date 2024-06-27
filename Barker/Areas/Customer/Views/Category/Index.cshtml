@@ -1,23 +1,35 @@
-﻿@model List<CategoryModel>
+﻿@model List<Barker.Models.CategoryModel>
 
 @{
     Layout = "_Layout";
+    ViewData["PageTitle"] = "Колекції";
 }
 
 <div class="container mt-5">
-    <div class="row">
-        @foreach (var category in Model)
-        {
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="@category.Img" class="card-img-top" alt="@category.Name" />
-                    <div class="card-body">
-                        <h5 class="card-title">@category.Name</h5>
-                        <p class="card-text">@category.Description</p>
-                        <a href="@Url.Action("Category", "Category", new { name = category.Name }, null)" class="btn btn-primary">View Products</a>
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            @foreach (var category in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="@category.Img" class="card-img-top" alt="@category.Name" />
+                        <div class="card-body">
+                            <h5 class="card-title">@category.Name</h5>
+                            <p class="card-text">@category.Description</p>
+                            <a href="@Url.Action("Category", "Category", new { name = category.Name }, null)" class="btn btn-primary">View Products</a>
+                        </div>
                     </div>
                 </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-12 text-center">
+                <h3>No categories available</h3>
             </div>
-        }
-    </div>
+        </div>
+    }
 </div>

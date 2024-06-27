@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Http;
 using Barker.Models;
 using System;
 
@@ -26,6 +25,7 @@ namespace Barker.Areas.Admin.Controllers
         {
             List<ProductModel> objProductList = _unitOfWork.Product.GetAll().ToList();
             return View(objProductList);
+
         }
 
         public IActionResult Create()
@@ -42,6 +42,7 @@ namespace Barker.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Обробка зображень
                 var imagePaths = new List<string>();
                 if (product.ImgFiles != null)
                 {
@@ -55,8 +56,7 @@ namespace Barker.Areas.Admin.Controllers
                     {
                         if (image != null && image.Length > 0)
                         {
-                            string randomDigits = new Random().Next(100, 1000).ToString(); // Генерация трех случайных цифр
-                            string newFileName = DateTime.Now.ToString("yyyyMMddHHmmssff") + randomDigits + Path.GetExtension(image.FileName);
+                            string newFileName = DateTime.Now.ToString("yyyyMMddHHmmssff") + Path.GetExtension(image.FileName);
                             string imageFullPath = Path.Combine(productFolder, newFileName);
 
                             using (var stream = new FileStream(imageFullPath, FileMode.Create))
@@ -70,6 +70,15 @@ namespace Barker.Areas.Admin.Controllers
                 }
 
                 product.Img = imagePaths;
+
+                // Перевірка IsOnSale
+                if (product.IsOnSale && product.SalePrice == null)
+                {
+                    ModelState.AddModelError("SalePrice", "Sale Price is required when product is on sale.");
+                    product.Categories = _unitOfWork.Category.GetAll().ToList();
+                    return View(product);
+                }
+
                 _unitOfWork.Product.Add(product);
                 _unitOfWork.Save();
                 TempData["success"] = "Product created successfully";
@@ -96,7 +105,6 @@ namespace Barker.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Получаем старую версию продукта из базы данных
                 var existingProduct = _unitOfWork.Product.Get(u => u.Id == product.Id);
                 if (existingProduct == null)
                 {
@@ -105,31 +113,34 @@ namespace Barker.Areas.Admin.Controllers
 
                 var imagePaths = existingProduct.Img;
 
-                // Если есть новые изображения, удаляем старые и добавляем новые
+                // Якщо ім'я продукту змінено
+                bool isNameChanged = !string.Equals(existingProduct.Name, product.Name, StringComparison.OrdinalIgnoreCase);
+                string oldProductFolder = Path.Combine(_environment.WebRootPath, "img", "product_Img", existingProduct.Name);
+                string newProductFolder = Path.Combine(_environment.WebRootPath, "img", "product_Img", product.Name);
+
+                if (isNameChanged)
+                {
+                    if (Directory.Exists(oldProductFolder))
+                    {
+                        Directory.Move(oldProductFolder, newProductFolder);
+                        imagePaths = imagePaths.Select(p => p.Replace($"/img/product_Img/{existingProduct.Name}/", $"/img/product_Img/{product.Name}/")).ToList();
+                    }
+                }
+
                 if (product.ImgFiles != null && product.ImgFiles.Any())
                 {
-                    // Удаление старых изображений
-                    string productFolder = Path.Combine(_environment.WebRootPath, "img", "product_Img", existingProduct.Name);
-                    if (Directory.Exists(productFolder))
+                    if (!Directory.Exists(newProductFolder))
                     {
-                        Directory.Delete(productFolder, true); // true позволяет рекурсивное удаление всех файлов и подкаталогов
+                        Directory.CreateDirectory(newProductFolder);
                     }
 
-                    // Создание новой папки для изображений, если она не существует
-                    if (!Directory.Exists(productFolder))
-                    {
-                        Directory.CreateDirectory(productFolder);
-                    }
-
-                    // Добавление новых изображений
                     imagePaths = new List<string>();
                     foreach (var image in product.ImgFiles)
                     {
                         if (image != null && image.Length > 0)
                         {
-                            string randomDigits = new Random().Next(100, 1000).ToString(); // Генерация трех случайных цифр
-                            string newFileName = DateTime.Now.ToString("yyyyMMddHHmmssff") + randomDigits + Path.GetExtension(image.FileName);
-                            string imageFullPath = Path.Combine(productFolder, newFileName);
+                            string newFileName = DateTime.Now.ToString("yyyyMMddHHmmssff") + Path.GetExtension(image.FileName);
+                            string imageFullPath = Path.Combine(newProductFolder, newFileName);
 
                             using (var stream = new FileStream(imageFullPath, FileMode.Create))
                             {
@@ -141,11 +152,19 @@ namespace Barker.Areas.Admin.Controllers
                     }
                 }
 
-                // Обновление данных продукта
+                // Перевірка IsOnSale
+                if (product.IsOnSale && product.SalePrice == null)
+                {
+                    ModelState.AddModelError("SalePrice", "Sale Price is required when product is on sale.");
+                    product.Categories = _unitOfWork.Category.GetAll().ToList();
+                    return View(product);
+                }
+
                 existingProduct.Name = product.Name;
                 existingProduct.Description = product.Description;
                 existingProduct.Img = imagePaths;
                 existingProduct.Price = product.Price;
+                existingProduct.SalePrice = product.SalePrice;
                 existingProduct.VendorCode = product.VendorCode;
                 existingProduct.IsAvailable = product.IsAvailable;
                 existingProduct.IsOnSale = product.IsOnSale;
@@ -199,5 +218,16 @@ namespace Barker.Areas.Admin.Controllers
             TempData["success"] = "Product deleted successfully";
             return RedirectToAction("Index");
         }
+
+        #region API CALLS
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            List<ProductModel> objProductList = _unitOfWork.Product.GetAll().ToList();
+            return Json(new { data = objProductList });
+        }
+
+        #endregion
     }
 }

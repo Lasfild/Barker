@@ -2,23 +2,47 @@
 
 @{
     Layout = "_Layout";
+    ViewData["PageTitle"] = ViewBag.CategoryName;
 }
+<link href="~/css/Product_List.css" rel="stylesheet" />
 
 <div class="container mt-5">
-    <div class="row">
-        @foreach (var product in Model)
-        {
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="@product.Img[0]" class="card-img-top" alt="@product.Name" />
-                    <div class="card-body">
-                        <h5 class="card-title">@product.Name</h5>
-                        <p class="card-text">@product.Description</p>
-                        <p>Price: @product.Price</p>
-                        <a href="@Url.Action("Details", "Product", new { id = product.Id }, null)" class="btn btn-primary">View Details</a>
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            @foreach (var product in Model)
+            {
+                <div class="col-md-4">
+                    <a href="@Url.Action("Product", "Product", new { name = product.Name })" class="text-decoration-none">
+                    <div class="card">
+                        <img src="@product.Img[0]" class="card-img-top" alt="@product.Name" />
+                        <div class="card-body text-center">
+                                <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">@product.Description</p>
+                            @if (product.IsOnSale)
+                            {
+                                <p class="price">
+                                    <span class="price-sale">@product.SalePrice.ToString("N0") грн</span>
+                                    <span class="price-original">@product.Price.ToString("N0") грн</span>
+                                </p>
+                            }
+                            else
+                            {
+                                <p class="price">@product.Price.ToString("N0") грн</p>
+                            }
+                        </div>
                     </div>
+                    </a>
                 </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-12 text-center">
+                <h3>No products available</h3>
             </div>
-        }
-    </div>
+        </div>
+    }
 </div>

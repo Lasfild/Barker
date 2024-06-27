@@ -1,19 +1,20 @@
 ﻿@model Barker.Models.ProductModel
 @{
     Layout = "_AdminLayout";
+    ViewData["PageTitle"] = "Редагувати Пару";
 }
 
-<div class="card shadow border-0 mt-4">
+<div class="card shadow border-0 my-4">
     <div class="card-header bg-primary bg-gradient ml-0 py-3">
         <div class="row mt-2">
             <div class="col-12 text-center">
-                <h2 class="text-white py-2">Edit Product</h2>
+                <h2 class="text-white py-2">Редагувати Пару</h2>
             </div>
         </div>
     </div>
-    <div class="card-body p-4">
+    <div class="card-body p-4" style="background: #E5E5E5;">
         <form method="post" enctype="multipart/form-data" class="row">
-            <div class="border p-3">
+            <div class="border p-3 mt-4">
                 <div class="form-floating mb-3 row p-1">
                     <select asp-for="CategoryId" class="form-control border-0 shadow">
                         @foreach (var category in Model.Categories)
@@ -21,44 +22,44 @@
                             <option value="@category.Id">@category.Name</option>
                         }
                     </select>
-                    <label asp-for="CategoryId" class="ms-2">Колекція</label>
+                    <label asp-for="CategoryId" class="ms-2">Category</label>
                     <span asp-validation-for="CategoryId" class="text-danger p-0"></span>
                 </div>
-                <div class="form-floating mb-3 row p-1">
-                    <input asp-for="Name" class="form-control border-0 shadow" />
-                    <label asp-for="Name" class="ms-2">Name</label>
-                    <span asp-validation-for="Name" class="text-danger p-0"></span>
+                <div class="form-floating mb-3 row п-1">
+                    <input asp-for="Name" class="form-control border-0 shadow" placeholder="Name" />
+                    <label asp-for="Name" class="ms-2"></label>
+                    <span asp-validation-for="Name" class="text-danger п-0"></span>
                 </div>
-                <div class="form-floating mb-3 row p-1">
-                    <textarea asp-for="Description" class="form-control border-0 shadow"></textarea>
-                    <label asp-for="Description" class="ms-2">Description</label>
-                    <span asp-validation-for="Description" class="text-danger p-0"></span>
+                <div class="form-floating mb-3 row п-1">
+                    <textarea asp-for="Description" class="form-control border-0 shadow" placeholder="Description"></textarea>
+                    <label asp-for="Description" class="ms-2"></label>
+                    <span asp-validation-for="Description" class="text-danger п-0"></span>
                 </div>
-                <div class="form-floating mb-3 row p-1">
-                    <label asp-for="ImgFiles" class="control-label">Загрузить новые изображения</label>
-                    <input type="file" asp-for="ImgFiles" class="form-control" multiple />
-                    <span asp-validation-for="ImgFiles" class="text-danger"></span>
+                <div class="form-floating mb-3 row п-1">
+                    <input asp-for="Price" class="form-control border-0 shadow" placeholder="Price" />
+                    <label asp-for="Price" class="ms-2"></label>
+                    <span asp-validation-for="Price" class="text-danger п-0"></span>
                 </div>
-                <div class="form-floating mb-3 row p-1">
-                    <input asp-for="Price" class="form-control border-0 shadow" />
-                    <label asp-for="Price" class="ms-2">Price</label>
-                    <span asp-validation-for="Price" class="text-danger p-0"></span>
+                <div class="form-floating mb-3 row п-1">
+                    <input asp-for="SalePrice" class="form-control border-0 shadow" placeholder="Sale Price" id="salePrice" />
+                    <label asp-for="SalePrice" class="ms-2"></label>
+                    <span asp-validation-for="SalePrice" class="text-danger п-0"></span>
                 </div>
-                <div class="form-floating mb-3 row p-1">
-                    <input asp-for="VendorCode" class="form-control border-0 shadow" />
-                    <label asp-for="VendorCode" class="ms-2">Vendor Code</label>
-                    <span asp-validation-for="VendorCode" class="text-danger p-0"></span>
+                <div class="form-floating mb-3 row п-1">
+                    <input asp-for="VendorCode" class="form-control border-0 shadow" placeholder="Vendor Code" />
+                    <label asp-for="VendorCode" class="ms-2"></label>
+                    <span asp-validation-for="VendorCode" class="text-danger п-0"></span>
                 </div>
-                <div class="form-floating mb-3 row p-1">
+                <div class="form-floating mb-3 row п-1">
                     <select asp-for="IsAvailable" class="form-control border-0 shadow">
                         <option value="true">Available</option>
                         <option value="false">Not Available</option>
                     </select>
                     <label asp-for="IsAvailable" class="ms-2">Available</label>
-                    <span asp-validation-for="IsAvailable" class="text-danger p-0"></span>
+                    <span asp-validation-for="IsAvailable" class="text-danger п-0"></span>
                 </div>
                 <div class="form-floating mb-3 row п-1">
-                    <select asp-for="IsOnSale" class="form-control border-0 shadow">
+                    <select asp-for="IsOnSale" class="form-control border-0 shadow" id="isOnSale" onchange="toggleSalePrice()">
                         <option value="true">On Sale</option>
                         <option value="false">Not On Sale</option>
                     </select>
@@ -66,38 +67,38 @@
                     <span asp-validation-for="IsOnSale" class="text-danger п-0"></span>
                 </div>
                 <div class="form-floating mb-3 row п-1">
-                    <input asp-for="Style" class="form-control border-0 shadow" />
-                    <label asp-for="Style" class="ms-2">Style</label>
+                    <input asp-for="Style" class="form-control border-0 shadow" placeholder="Style" />
+                    <label asp-for="Style" class="ms-2"></label>
                     <span asp-validation-for="Style" class="text-danger п-0"></span>
                 </div>
                 <div class="form-floating mb-3 row п-1">
-                    <input asp-for="Shoe" class="form-control border-0 shadow" />
-                    <label asp-for="Shoe" class="ms-2">Shoe</label>
+                    <input asp-for="Shoe" class="form-control border-0 shadow" placeholder="Shoe" />
+                    <label asp-for="Shoe" class="ms-2"></label>
                     <span asp-validation-for="Shoe" class="text-danger п-0"></span>
                 </div>
                 <div class="form-floating mb-3 row п-1">
-                    <input asp-for="Fullness" class="form-control border-0 shadow" />
-                    <label asp-for="Fullness" class="ms-2">Fullness</label>
+                    <input asp-for="Fullness" class="form-control border-0 shadow" placeholder="Fullness" />
+                    <label asp-for="Fullness" class="ms-2"></label>
                     <span asp-validation-for="Fullness" class="text-danger п-0"></span>
                 </div>
                 <div class="form-floating mb-3 row п-1">
-                    <input asp-for="SoleMethod" class="form-control border-0 shadow" />
-                    <label asp-for="SoleMethod" class="ms-2">Sole Method</label>
+                    <input asp-for="SoleMethod" class="form-control border-0 shadow" placeholder="Sole Method" />
+                    <label asp-for="SoleMethod" class="ms-2"></label>
                     <span asp-validation-for="SoleMethod" class="text-danger п-0"></span>
                 </div>
                 <div class="form-floating mb-3 row п-1">
-                    <input asp-for="Sole" class="form-control border-0 shadow" />
-                    <label asp-for="Sole" class="ms-2">Sole</label>
+                    <input asp-for="Sole" class="form-control border-0 shadow" placeholder="Sole" />
+                    <label asp-for="Sole" class="ms-2"></label>
                     <span asp-validation-for="Sole" class="text-danger п-0"></span>
                 </div>
                 <div class="form-floating mb-3 row п-1">
-                    <input asp-for="Country" class="form-control border-0 shadow" />
-                    <label asp-for="Country" class="ms-2">Country</label>
+                    <input asp-for="Country" class="form-control border-0 shadow" placeholder="Country" />
+                    <label asp-for="Country" class="ms-2"></label>
                     <span asp-validation-for="Country" class="text-danger п-0"></span>
                 </div>
                 <div class="form-floating mb-3 row п-1">
-                    <input asp-for="TopMaterial" class="form-control border-0 shadow" />
-                    <label asp-for="TopMaterial" class="ms-2">Top Material</label>
+                    <input asp-for="TopMaterial" class="form-control border-0 shadow" placeholder="Top Material" />
+                    <label asp-for="TopMaterial" class="ms-2"></label>
                     <span asp-validation-for="TopMaterial" class="text-danger п-0"></span>
                 </div>
                 <div class="form-floating mb-3 row п-1">
@@ -111,13 +112,18 @@
                     <span asp-validation-for="Size" class="text-danger п-0"></span>
                 </div>
                 <div class="form-floating mb-3 row п-1">
-                    <input asp-for="Color" class="form-control border-0 shadow" />
-                    <label asp-for="Color" class="ms-2">Color</label>
+                    <input asp-for="Color" class="form-control border-0 shadow" placeholder="Color" />
+                    <label asp-for="Color" class="ms-2"></label>
                     <span asp-validation-for="Color" class="text-danger п-0"></span>
+                </div>
+                <div class="form-floating mb-3 row п-1">
+                    <input asp-for="ImgFiles" type="file" multiple class="form-control border-0 shadow" />
+                    <label asp-for="ImgFiles" class="ms-2">Images</label>
+                    <span asp-validation-for="ImgFiles" class="text-danger п-0"></span>
                 </div>
                 <div class="row mt-3">
                     <div class="col-6 col-md-3">
-                        <button type="submit" class="btn btn-outline-info form-control">Edit</button>
+                        <button type="submit" class="btn btn-outline-success form-control">Update</button>
                     </div>
                     <div class="col-6 col-md-3">
                         <a asp-controller="Product" asp-action="Index" class="btn btn-outline-primary form-control">Back To Products</a>
@@ -127,3 +133,18 @@
         </form>
     </div>
 </div>
+
+<script>
+    function toggleSalePrice() {
+        var isOnSale = document.getElementById("isOnSale").value === "true";
+        var salePriceInput = document.getElementById("salePrice");
+        salePriceInput.disabled = !isOnSale;
+        if (!isOnSale) {
+            salePriceInput.value = "";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        toggleSalePrice();
+    });
+</script>

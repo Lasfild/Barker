@@ -1,6 +1,7 @@
 ﻿@model List<ProductModel>
 @{
     Layout = "_AdminLayout";
+    ViewData["PageTitle"] = "Пари";
 }
 
 <div class="card shadow border-0 my-4">
@@ -29,7 +30,7 @@
                     <tr>
                         <td>@product.Id</td>
                         <td>@product.Name</td>
-                        <td>@(product.Price)₴</td>
+                        <td>@product.Price.ToString("N0")₴</td>
                         <td>
                             @if (product.Img != null && product.Img.Count > 0)
                             {

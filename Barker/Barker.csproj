@@ -20,13 +20,8 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="wwwroot\img\category_img\" />
-		<Folder Include="wwwroot\img\product_Img\AlderneyRosewood\" />
-		<Folder Include="wwwroot\img\product_Img\FloreBlack\" />
-		<Folder Include="wwwroot\js\" />
+		<PackageReference Include="X.PagedList" Version="9.1.2" />
+		<PackageReference Include="X.PagedList.Mvc.Core" Version="9.1.2" />
 	</ItemGroup>
 
 	<ItemGroup>

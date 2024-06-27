@@ -1,6 +1,7 @@
 ﻿@model ProductModel
 @{
     Layout = "_AdminLayout";
+    ViewData["PageTitle"] = "Видалити Пару";
 }
 
 <div class="card shadow border-0 my-4">
@@ -21,10 +22,6 @@
                 <div class="form-floating mb-3 row p-1">
                     <input asp-for="Description" class="form-control border-0 shadow" placeholder="Description" disabled />
                     <label asp-for="Description" class="ms-2"></label>
-                </div>
-                <div class="form-floating mb-3 row p-1">
-                    <input asp-for="Img" class="form-control border-0 shadow" placeholder="Img" disabled />
-                    <label asp-for="Img" class="ms-2"></label>
                 </div>
                 <div class="row mt-3">
                     <div class="col-6 col-md-3">

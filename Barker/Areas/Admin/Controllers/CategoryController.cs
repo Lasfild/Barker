@@ -1,6 +1,9 @@
 ﻿using Barker.DataAccess.Repository.IRepository;
 using Barker.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using System.Linq;
 
 namespace Barker.Areas.Admin.Controllers
 {
@@ -18,8 +21,8 @@ namespace Barker.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            List<CategoryModel> objCategoryList = _unitOfWork.Category.GetAll().ToList();
-            return View(objCategoryList);
+            var categories = _unitOfWork.Category.GetAll().ToList();
+            return View(categories);
         }
 
         public IActionResult Create()
@@ -32,23 +35,24 @@ namespace Barker.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                string categoryFolder = Path.Combine(_environment.WebRootPath, "img", "category_Img", category.Name);
+                if (!Directory.Exists(categoryFolder))
+                {
+                    Directory.CreateDirectory(categoryFolder);
+                }
+
                 if (category.ImgFile != null)
                 {
-                    string categoryFolder = Path.Combine(_environment.WebRootPath, "img", "category_img");
-                    if (!Directory.Exists(categoryFolder))
-                    {
-                        Directory.CreateDirectory(categoryFolder);
-                    }
+                    string extension = Path.GetExtension(category.ImgFile.FileName);
+                    string newFileName = $"{DateTime.Now:yyyyMMddHHmmssff}{extension}";
+                    string filePath = Path.Combine(categoryFolder, newFileName);
 
-                    string newFileName = DateTime.Now.ToString("yyyyMMddHHmmssff") + Path.GetExtension(category.ImgFile.FileName);
-                    string imageFullPath = Path.Combine(categoryFolder, newFileName);
-
-                    using (var stream = new FileStream(imageFullPath, FileMode.Create))
+                    using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         category.ImgFile.CopyTo(stream);
                     }
 
-                    category.Img = $"/img/category_img/{newFileName}";
+                    category.Img = $"/img/category_Img/{category.Name}/{newFileName}";
                 }
 
                 _unitOfWork.Category.Add(category);
@@ -59,18 +63,14 @@ namespace Barker.Areas.Admin.Controllers
             return View(category);
         }
 
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null || id == 0)
+            var category = _unitOfWork.Category.Get(u => u.Id == id);
+            if (category == null)
             {
                 return NotFound();
             }
-            CategoryModel? categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
-            if (categoryFromDb == null)
-            {
-                return NotFound();
-            }
-            return View(categoryFromDb);
+            return View(category);
         }
 
         [HttpPost]
@@ -84,75 +84,100 @@ namespace Barker.Areas.Admin.Controllers
                     return NotFound();
                 }
 
-                if (category.ImgFile != null)
-                {
-                    string categoryFolder = Path.Combine(_environment.WebRootPath, "img", "category_img");
+                bool isNameChanged = !string.Equals(existingCategory.Name, category.Name, StringComparison.OrdinalIgnoreCase);
+                string oldCategoryFolder = Path.Combine(_environment.WebRootPath, "img", "category_Img", existingCategory.Name);
+                string newCategoryFolder = Path.Combine(_environment.WebRootPath, "img", "category_Img", category.Name);
 
-                    // Удаление старого изображения, если оно существует
-                    if (!string.IsNullOrEmpty(existingCategory.Img))
+                if (isNameChanged)
+                {
+                    if (Directory.Exists(oldCategoryFolder))
                     {
-                        string oldImagePath = Path.Combine(_environment.WebRootPath, existingCategory.Img.TrimStart('/'));
-                        if (System.IO.File.Exists(oldImagePath))
-                        {
-                            System.IO.File.Delete(oldImagePath);
-                        }
+                        Directory.Move(oldCategoryFolder, newCategoryFolder);
                     }
 
-                    string newFileName = DateTime.Now.ToString("yyyyMMddHHmmssff") + Path.GetExtension(category.ImgFile.FileName);
-                    string imageFullPath = Path.Combine(categoryFolder, newFileName);
+                    if (!string.IsNullOrEmpty(existingCategory.Img))
+                    {
+                        existingCategory.Img = existingCategory.Img.Replace($"/img/category_Img/{existingCategory.Name}/", $"/img/category_Img/{category.Name}/");
+                    }
+                }
 
-                    using (var stream = new FileStream(imageFullPath, FileMode.Create))
+                if (category.ImgFile != null)
+                {
+                    if (!Directory.Exists(newCategoryFolder))
+                    {
+                        Directory.CreateDirectory(newCategoryFolder);
+                    }
+
+                    string extension = Path.GetExtension(category.ImgFile.FileName);
+                    string newFileName = $"{DateTime.Now:yyyyMMddHHmmssff}{extension}";
+                    string filePath = Path.Combine(newCategoryFolder, newFileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
                     {
                         category.ImgFile.CopyTo(stream);
                     }
 
-                    category.Img = $"/img/category_img/{newFileName}";
+                    if (!string.IsNullOrEmpty(existingCategory.Img))
+                    {
+                        string oldFilePath = Path.Combine(_environment.WebRootPath, existingCategory.Img.TrimStart('/'));
+                        if (System.IO.File.Exists(oldFilePath))
+                        {
+                            System.IO.File.Delete(oldFilePath);
+                        }
+                    }
+
+                    existingCategory.Img = $"/img/category_Img/{category.Name}/{newFileName}";
                 }
 
-                // Обновление данных категории
                 existingCategory.Name = category.Name;
                 existingCategory.Description = category.Description;
-                existingCategory.Img = category.Img ?? existingCategory.Img;
 
                 _unitOfWork.Category.Update(existingCategory);
                 _unitOfWork.Save();
-                TempData["success"] = "Category edited successfully";
+                TempData["success"] = "Category updated successfully";
                 return RedirectToAction("Index");
             }
             return View(category);
         }
 
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(int id)
         {
-            if (id == null || id == 0)
+            var category = _unitOfWork.Category.Get(u => u.Id == id);
+            if (category == null)
             {
                 return NotFound();
             }
-            CategoryModel? categoryFromDb = _unitOfWork.Category.Get(u => u.Id == id);
-            if (categoryFromDb == null)
-            {
-                return NotFound();
-            }
-            return View(categoryFromDb);
+            return View(category);
         }
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeletePost(int? id)
+        public IActionResult DeletePost(int id)
         {
-            CategoryModel? category = _unitOfWork.Category.Get(u => u.Id == id);
+            var category = _unitOfWork.Category.Get(u => u.Id == id);
             if (category == null)
             {
                 return NotFound();
             }
 
-            // Удаление изображения
-            if (!string.IsNullOrEmpty(category.Img))
+            var newCategoryId = _unitOfWork.Category.GetAll()
+                .Where(c => c.Id != id)
+                .OrderBy(c => c.Id)
+                .FirstOrDefault()?.Id;
+
+            if (newCategoryId != null)
             {
-                string imagePath = Path.Combine(_environment.WebRootPath, category.Img.TrimStart('/'));
-                if (System.IO.File.Exists(imagePath))
+                var products = _unitOfWork.Product.GetAll(p => p.CategoryId == id).ToList();
+                foreach (var product in products)
                 {
-                    System.IO.File.Delete(imagePath);
+                    product.CategoryId = newCategoryId.Value;
+                    _unitOfWork.Product.Update(product);
                 }
+            }
+
+            string categoryFolder = Path.Combine(_environment.WebRootPath, "img", "category_Img", category.Name);
+            if (Directory.Exists(categoryFolder))
+            {
+                Directory.Delete(categoryFolder, true);
             }
 
             _unitOfWork.Category.Remove(category);
@@ -162,4 +187,3 @@ namespace Barker.Areas.Admin.Controllers
         }
     }
 }
-

@@ -1,6 +1,8 @@
 ﻿@model Barker.Models.ProductModel
+
 @{
     Layout = "_AdminLayout";
+    ViewData["PageTitle"] = "Створити Пару";
 }
 
 <div class="card shadow border-0 my-4">
@@ -27,17 +29,22 @@
                 <div class="form-floating mb-3 row p-1">
                     <input asp-for="Name" class="form-control border-0 shadow" placeholder="Name" />
                     <label asp-for="Name" class="ms-2"></label>
-                    <span asp-validation-for="Name" class="text-danger p-0"></span>
+                    <span asp-validation-for="Name" class="text-danger п-0"></span>
                 </div>
                 <div class="form-floating mb-3 row p-1">
                     <textarea asp-for="Description" class="form-control border-0 shadow" placeholder="Description"></textarea>
                     <label asp-for="Description" class="ms-2"></label>
-                    <span asp-validation-for="Description" class="text-danger p-0"></span>
+                    <span asp-validation-for="Description" class="text-danger п-0"></span>
                 </div>
                 <div class="form-floating mb-3 row п-1">
                     <input asp-for="Price" class="form-control border-0 shadow" placeholder="Price" />
                     <label asp-for="Price" class="ms-2"></label>
                     <span asp-validation-for="Price" class="text-danger п-0"></span>
+                </div>
+                <div class="form-floating mb-3 row п-1">
+                    <input asp-for="SalePrice" class="form-control border-0 shadow" placeholder="Sale Price" id="salePrice" />
+                    <label asp-for="SalePrice" class="ms-2"></label>
+                    <span asp-validation-for="SalePrice" class="text-danger п-0"></span>
                 </div>
                 <div class="form-floating mb-3 row п-1">
                     <input asp-for="VendorCode" class="form-control border-0 shadow" placeholder="Vendor Code" />
@@ -53,7 +60,7 @@
                     <span asp-validation-for="IsAvailable" class="text-danger п-0"></span>
                 </div>
                 <div class="form-floating mb-3 row п-1">
-                    <select asp-for="IsOnSale" class="form-control border-0 shadow">
+                    <select asp-for="IsOnSale" class="form-control border-0 shadow" id="isOnSale" onchange="toggleSalePrice()">
                         <option value="true">On Sale</option>
                         <option value="false">Not On Sale</option>
                     </select>
@@ -127,3 +134,18 @@
         </form>
     </div>
 </div>
+
+<script>
+    function toggleSalePrice() {
+        var isOnSale = document.getElementById("isOnSale").value === "true";
+        var salePriceInput = document.getElementById("salePrice");
+        salePriceInput.disabled = !isOnSale;
+        if (!isOnSale) {
+            salePriceInput.value = "";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        toggleSalePrice();
+    });
+</script>

@@ -27,8 +27,10 @@ namespace Barker.Models
         [Required]
         public decimal Price { get; set; }
 
+        public decimal SalePrice { get; set; }
+
         [Required]
-        public int VendorCode { get; set; }
+        public string? VendorCode { get; set; }
 
         [Required]
         public bool IsAvailable { get; set; }
@@ -57,7 +59,6 @@ namespace Barker.Models
         [Required]
         public string? TopMaterial { get; set; }
 
-        [Required]
         public List<double>? Size { get; set; }
 
         [Required]

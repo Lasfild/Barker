@@ -41,7 +41,14 @@ app.UseEndpoints(endpoints =>
 
     endpoints.MapControllerRoute(
         name: "category",
-        pattern: "{area=Customer}/{controller=Category}/{action=Category}/{name?}");
+        pattern: "Customer/Category/{name}",
+        defaults: new { area = "Customer", controller = "Category", action = "Category" });
+
+    endpoints.MapControllerRoute(
+        name: "product",
+        pattern: "Customer/Product/{id}",
+        defaults: new { area = "Customer", controller = "Product", action = "Product" });
 });
+
 
 app.Run();

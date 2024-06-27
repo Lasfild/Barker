@@ -1,0 +1,76 @@
+﻿/* Файл Product_List.css */
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+    .card img {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+.card-body {
+    padding: 15px;
+    text-align: center;
+}
+
+.card-title {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.card-text.truncate {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.price {
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+.price-sale {
+    color: #e74c3c;
+    margin-right: 10px;
+}
+
+.price-original {
+    text-decoration: line-through;
+    color: #888;
+}
+
+hr {
+    margin: 10px 0;
+}
+
+.price {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.price-sale {
+    color: black;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.price-original {
+    text-decoration: line-through;
+    color: #c0c0c0;
+}
+.card a {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+}
+
+    .card a:hover {
+        text-decoration: none;
+    }
